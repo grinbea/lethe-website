@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 import os
 import sys
-FRONT_ROOT_DIRECTORY = os.environ.get(FRONT_ROOT_DIRECTORY)
-sys.path.append(FRONT_ROOT_DIRECTORY)
+FRONT_ROOT_DIRECTORY = os.environ.get('FRONT_ROOT_DIRECTORY')
+sys.path.append('FRONT_ROOT_DIRECTORY')
 from params import *
 sys.path.append(BACK_ROOT_DIRECTORY)
 from Lethe.main import predict
@@ -30,7 +30,7 @@ if st.button('Get diagnosis'):
         try:
             with st.spinner('Predicting...'):
                 test_data = pd.read_csv(uploaded_file)
-                diagnosis = predict(test_data)
+                #diagnosis = predict(test_data)
                 st.markdown("Your diagnosis is " + diagnosis)
         except:
             st.markdown("No results found.")
