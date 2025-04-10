@@ -4,15 +4,15 @@ import os
 import sys
 import pandas as pd
 FRONT_ROOT_DIRECTORY = os.environ.get('FRONT_ROOT_DIRECTORY')
-sys.path.append('FRONT_ROOT_DIRECTORY')
+sys.path.append(FRONT_ROOT_DIRECTORY)
 from params import *
+BACK_ROOT_DIRECTORY = os.environ.get('BACK_ROOT_DIRECTORY')
 sys.path.append(BACK_ROOT_DIRECTORY)
 from Lethe.main import predict
 
 columns = []
 for c in range(1,1025):
     columns.append("f"+str(c))
-columns.append('phase')
 
 files_dict = {
     "healthy" : 0,
