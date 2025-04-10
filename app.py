@@ -23,9 +23,17 @@ files_dict = {
     "rbd"     : 5
 }
 
+descrip_dict = {
+    0: "You are healthy",
+    1: "Narcolepsy",
+    2: "PLM",
+    3: "SDB",
+    4: "NFLE",
+    5: "RBD"
+}
 
 # Title and description
-st.title('     EGC Diagnosis     ')
+st.header('     ECG Diagnosis     ')
 st.title('Predict sleep disorders')
 
 #api_url = /bigd/code/ncspardo/proyecto-lethe/Lethe/main.py
@@ -41,13 +49,8 @@ with col2:
 
 uploaded_file = st.file_uploader("Choose a file", type=["csv"])
 
-uploaded_file = '/bigd/code/grinbea/lethe-website/test_data/test_bal_healthy.csv'
 if st.button('Get diagnosis'):
     test_data = pd.read_csv(uploaded_file, names=columns)
     diagnosis = predict(test_data)
-    diag = 0
-    for key,value in files_dict.items():
-        if diagnosis[0] == value:
-            diag = key
-    st.header(f'{name} diagnosis is  {diag}')
+    st.header(f'Your diagnosis is:  {descript[diagnosis]}')
 
