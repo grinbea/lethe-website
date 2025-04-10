@@ -27,5 +27,3 @@ LOCAL_DATA_PATH = os.path.join(os.path.expanduser('~'), ".lewagon", "mlops", "da
 LOCAL_REGISTRY_PATH =  os.path.join(os.path.expanduser('~'), ".lewagon", "mlops", "training_outputs")
 
 DTYPES_PROCESSED = np.float32
-
-
