@@ -17,19 +17,19 @@ columns.append('Sleep_stages')
 files_dict = {
     "healthy" : 0,
     "narco"   : 1,
-    "nfle"    : 2,
-    "rbd"     : 3,
-    "plm"     : 4,
-    "sdb"     : 5
+    "ins"     : 2,
+    "sdb"     : 3,
+    "rbd"     : 4,
+    "plm"     : 5
 }
 
 descrip_dict = {
     0: "You are healthy",
     1: "Narcolepsy",
-    2: "NFLE",
-    3: "RBD",
-    4: "PLM",
-    5: "SDB"
+    2: "Insomny",
+    3: "SDB",
+    4: "RBD",
+    5: "PLM"
 }
 
 #api_url = 'https://github.com/ncspardo/proyecto-lethe/tree/master/Lethe/predict'
