@@ -1,42 +1,41 @@
 import streamlit as st
+import datetime
 import requests
-import os
-import sys
 import pandas as pd
-FRONT_ROOT_DIRECTORY = os.environ.get('FRONT_ROOT_DIRECTORY')
-sys.path.append(FRONT_ROOT_DIRECTORY)
-from params import *
-BACK_ROOT_DIRECTORY = os.environ.get('BACK_ROOT_DIRECTORY')
-sys.path.append(BACK_ROOT_DIRECTORY)
-from Lethe.main import predict
+import numpy as np
+
+import sys
+sys.path.append('/bigd/code/ncspardo/proyecto-lethe/Lethe')
+from main import predict
+from model.frequency_modeling import apply_fft
 
 columns = []
-for c in range(1,1025):
+for c in range(1,1024):
     columns.append("f"+str(c))
+columns.append('Sleep_stages')
 
 files_dict = {
     "healthy" : 0,
     "narco"   : 1,
-    "plm"     : 2,
-    "sdb"     : 3,
-    "nfle"    : 4,
-    "rbd"     : 5
+    "nfle"    : 2,
+    "rbd"     : 3,
+    "plm"     : 4,
+    "sdb"     : 5
 }
 
 descrip_dict = {
     0: "You are healthy",
     1: "Narcolepsy",
-    2: "PLM",
-    3: "SDB",
-    4: "NFLE",
-    5: "RBD"
+    2: "NFLE",
+    3: "RBD",
+    4: "PLM",
+    5: "SDB"
 }
 
+#api_url = 'https://github.com/ncspardo/proyecto-lethe/tree/master/Lethe/predict'
 # Title and description
 st.header('     ECG Diagnosis     ')
 st.title('Predict sleep disorders')
-
-#api_url = /bigd/code/ncspardo/proyecto-lethe/Lethe/main.py
 
 # Input section
 col1, col2 = st.columns(2)
@@ -51,6 +50,10 @@ uploaded_file = st.file_uploader("Choose a file", type=["csv"])
 
 if st.button('Get diagnosis'):
     test_data = pd.read_csv(uploaded_file, names=columns)
+    #response = requests.get(api_url, params=test_data)
+    #diagnosis = response.json()
     diagnosis = predict(test_data)
-    st.header(f'Your diagnosis is:  {descript[diagnosis]}')
-
+    max_index = np.argmax(diagnosis)
+    
+    dg = descrip_dict[max_index]
+    st.header(f'Your diagnosis is:  {dg}')
