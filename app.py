@@ -3,24 +3,19 @@ import datetime
 import requests
 import pandas as pd
 import numpy as np
-
-import sys
-sys.path.append('/bigd/code/ncspardo/proyecto-lethe/Lethe')
-from main import predict
-from model.frequency_modeling import apply_fft
-
-columns = []
-for c in range(1,1024):
-    columns.append("f"+str(c))
-columns.append('Sleep_stages')
+#
+#import sys
+#sys.path.append('/bigd/code/ncspardo/proyecto-lethe/Lethe')
+#from main import predict
+#from model.frequency_modeling import apply_fft
 
 files_dict = {
     "healthy" : 0,
     "narco"   : 1,
     "ins"     : 2,
     "sdb"     : 3,
-    "rbd"     : 4,
-    "plm"     : 5
+    "plm"     : 4,
+    "rbd"     : 5
 }
 
 descrip_dict = {
@@ -28,11 +23,12 @@ descrip_dict = {
     1: "Narcolepsy",
     2: "Insomny",
     3: "SDB",
-    4: "RBD",
-    5: "PLM"
+    4: "PLM",
+    5: "RBD"
 }
 
-#api_url = 'https://github.com/ncspardo/proyecto-lethe/tree/master/Lethe/predict'
+api_url = 'http://127.0.0.1:8000/predict'
+
 # Title and description
 st.header('     ECG Diagnosis     ')
 st.title('Predict sleep disorders')
@@ -49,11 +45,16 @@ with col2:
 uploaded_file = st.file_uploader("Choose a file", type=["csv"])
 
 if st.button('Get diagnosis'):
-    test_data = pd.read_csv(uploaded_file, names=columns)
-    #response = requests.get(api_url, params=test_data)
-    #diagnosis = response.json()
-    diagnosis = predict(test_data)
-    max_index = np.argmax(diagnosis)
+    columns = []
+    for c in range(1,1024):
+        columns.append("f"+str(c))
+    columns.append('Sleep_stages')
+
+    df = pd.read_csv(uploaded_file,names=columns)
+    ddf = df.to_dict(orient='records')
+
+    response = requests.post(api_url, json={'data':ddf})
+    diagnosis = response.json()
+    dg = int(diagnosis['diagnosis'])
     
-    dg = descrip_dict[max_index]
-    st.header(f'Your diagnosis is:  {dg}')
+    st.header(f'Your diagnosis is:  {descrip_dict[dg]}')
