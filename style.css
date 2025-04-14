@@ -1,36 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap');
 
-    :root {
-        --primary: #0A0F2C;
-        --secondary: #1A2146;
-        --accent: #00FFC4;
-        --text: #FFFFFF;
-        --bg: #070A1A;
-    }
-    * {
-        font-family: 'Space Grotesk', sans-serif;
-        color: var(--text);
-    }
+:root {
+    --primary: #0A0F2C;
+    --secondary: #1A2146;
+    --accent: #00FFC4;
+    --text: #FFFFFF;
+    --bg: #070A1A;
+    --input-text: #FFFFFF;
+    --label-text: #00FFC4;
+}
 
-    html, body, [data-baseweb="container"] {
-        background: var(--bg) !important;
-    }
+* {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+}
 
-    .main {
-        background: linear-gradient(45deg, var(--primary), var(--bg)) !important;
-        /*color: var(--text) !important;*/
-    }
+/* Estilos específicos para labels */
+.stTextInput>label,
+.stNumberInput>label,
+.stSelectbox>label,
+.stDateInput>label {
+    color: var(--label-text) !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
 
-    .cyber-header {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        padding: 3rem 2rem;
-        margin: -2rem -2rem 3rem -2rem;
-        border-radius: 0 0 40px 40px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        position: relative;
-        overflow: hidden;
-        color: white;
-    }
+/* Estilos para el texto en inputs */
+.stTextInput>div>div>input,
+.stNumberInput>div>div>input,
+.stSelectbox>div>div>div,
+.stDateInput>div>div>input {
+    color: var(--input-text) !important;
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    padding: 12px 20px !important;
+    border: 1px solid rgba(0,255,196,0.2) !important;
+}
+
+/* Contenedor principal */
+.main {
+    background: linear-gradient(45deg, var(--primary), var(--bg)) !important;
+}
+
+/* Resto de tus estilos permanecen igual... */
+.cyber-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 3rem 2rem;
+    margin: -2rem -2rem 3rem -2rem;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
 
     .cyber-card {
         background: rgba(10, 15, 40, 0.8) !important;
@@ -86,4 +109,6 @@
 
     .diagnosis-text {
         line-height: 1.6;
+        color: black;
+        font-size: 16px;
     }

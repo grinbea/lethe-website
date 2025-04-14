@@ -30,7 +30,7 @@ st.markdown("""
 # Información detallada para cada diagnóstico
 DIAGNOSIS_INFO = {
     "0": {
-        "name": "Healthy Sleep Pattern",
+        "name": "The analysis could not find any irregaularity based on the frequency patterns",
         "description": "The analysis indicates normal sleep architecture without evidence of significant sleep disorders.",
         "key_parameters": {
             "AHI": "<5 events/hour",
@@ -56,7 +56,7 @@ DIAGNOSIS_INFO = {
         "key_parameters": {
             "Sleep Latency": "<8 minutes",
             "REM Latency": "<15 minutes",
-            "SOREMPs": "≥2 in MSLT"
+            "SOREMPs": ">=2 in MSLT"
         },
         "symptoms": [
             "Excessive daytime sleepiness",
@@ -68,8 +68,8 @@ DIAGNOSIS_INFO = {
             "Multiple Sleep Latency Test",
             "HLA-DQB1 testing"
         ],
-        "model_accuracy": 89,
-        "confidence": 85
+        "model_accuracy": 87,
+        "confidence": 80
     },
     "2": {
         "name": "Insomnia",
@@ -89,14 +89,14 @@ DIAGNOSIS_INFO = {
             "Sleep diary",
             "Sleep hygiene optimization"
         ],
-        "model_accuracy": 91,
-        "confidence": 88
+        "model_accuracy": 87,
+        "confidence": 80
     },
     "3": {
         "name": "Sleep Disordered Breathing",
         "description": "The analysis reveals significant respiratory disturbances during sleep.",
         "key_parameters": {
-            "AHI": "≥15 events/hour",
+            "AHI": ">=15 events/hour",
             "SpO2 Nadir": "<90%",
             "Arousal Index": ">15/hour"
         },
@@ -110,8 +110,8 @@ DIAGNOSIS_INFO = {
             "ENT evaluation",
             "Weight management"
         ],
-        "model_accuracy": 94,
-        "confidence": 92
+        "model_accuracy": 87,
+        "confidence": 80
     }
 }
 
@@ -120,11 +120,12 @@ def generate_medical_report(patient_info, diagnosis_data):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", 'B', 16)
+    pdf.set_margins(left=15, top=15, right=15)
+    pdf.set_auto_page_break(auto=True, margin=15)
 
     # Header
-    pdf.set_fill_color(10, 15, 40)
-    pdf.set_text_color(0, 255, 196)
-    pdf.cell(0, 10, "NEUROSLEEP DIAGNOSTIC REPORT", ln=1, align='C', fill=True)
+    pdf.set_text_color(10, 15, 40)
+    pdf.cell(0, 10, "NEUROSLEEP PRO DIAGNOSTIC REPORT", ln=1, align='C', fill=False)
 
     # Información del paciente
     pdf.set_font("Arial", size=12)
@@ -134,30 +135,47 @@ def generate_medical_report(patient_info, diagnosis_data):
     pdf.cell(0, 10, f"Report Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", ln=1)
 
     # Sección de diagnóstico
+    pdf.ln(10)
     pdf.set_font("Arial", 'B', 14)
-    pdf.set_text_color(0, 255, 196)
-    pdf.cell(0, 15, f"Primary Diagnosis: {diagnosis_data['name']}", ln=1)
+    pdf.set_text_color(10, 15, 40)
+    pdf.cell(0, 10, f"Primary Diagnosis: {diagnosis_data['name']}", ln=1, align='C', center=True)
     pdf.set_font("Arial", size=12)
     pdf.set_text_color(0, 0, 0)
-    pdf.multi_cell(0, 8, diagnosis_data["description"])
+    pdf.multi_cell(0, 8, diagnosis_data["description"], align='C')
+
 
     # Parámetros clave
+    pdf.ln(10)
     pdf.set_font("Arial", 'B', 14)
-    pdf.set_text_color(0, 255, 196)
-    pdf.cell(0, 15, "Key Metrics", ln=1)
+    pdf.set_text_color(10, 15, 40)
+    pdf.cell(0, 10, "Key Metrics", align='C', center=True, ln=2)
     pdf.set_font("Arial", size=12)
-    pdf.set_text_color(255, 255, 255)
+    pdf.set_text_color(0,0,0)
     for param, value in diagnosis_data["key_parameters"].items():
-        pdf.cell(0, 10, f" {param}: {value}", ln=1)
+        pdf.cell(0, 10, f" {param}: {value}", ln=1, align='L')
 
-    # Confianza del modelo
-    pdf.set_font("Arial", 'B', 14)
-    pdf.set_text_color(0, 255, 196)
-    pdf.cell(0, 15, "Diagnostic Confidence", ln=1)
+    # Model Information
+    pdf.set_font("Arial", 'B', 12)
+    pdf.set_text_color(10, 15, 40)
+    pdf.cell(0, 10, "Diagnostic Confidence:", ln=1)
     pdf.set_font("Arial", size=12)
-    pdf.set_text_color(255, 255, 255)
-    pdf.cell(0, 10, f"Model Accuracy: {diagnosis_data['model_accuracy']}%", ln=1)
-    pdf.cell(0, 10, f"Analysis Confidence: {diagnosis_data['confidence']}%", ln=1)
+    pdf.cell(0, 10, f"- Model Accuracy: {diagnosis_data['model_accuracy']}% ", ln=1)
+    pdf.cell(0, 10, f"- Analysis Confidence: {diagnosis_data['confidence']}%", ln=1)
+    pdf.set_text_color(0,0,0)
+
+    # Recomendaciones
+    pdf.ln(5)
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(0, 10, "Clinical Recommendations:", ln=1)
+    pdf.set_font("Arial", size=12)
+    for rec in diagnosis['recommendations']:
+        pdf.cell(0, 10, f"- {rec}", ln=1)
+
+    # Security Footer
+    pdf.ln(10)
+    pdf.set_font("Arial", 'I', 8)
+    pdf.cell(0, 10, "Secured by Proyecto Lethe, supported by Le Wagon", ln=1)
+
 
     return bytes(pdf.output(dest='S'))  #.encode('latin1')
 
