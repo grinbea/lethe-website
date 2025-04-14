@@ -27,7 +27,8 @@ descrip_dict = {
     5: "RBD"
 }
 
-api_url = 'http://127.0.0.1:8000/predict'
+#api_url = 'http://127.0.0.1:8000/predict'
+api_url = 'http://proyecto-lethe-1029998951756.europe-west1.run.app'
 
 # Title and description
 st.header('     ECG Diagnosis     ')
