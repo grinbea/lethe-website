@@ -1,0 +1,6 @@
+test_data/
+g_test_data/
+.env
+.python-version
+notebooks/
+__pycache__/
