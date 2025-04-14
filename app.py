@@ -27,6 +27,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+with open("Sleep Neuro PRO (3).png", "rb") as image_file:
+    encoded = base64.b64encode(image_file.read()).decode()
+st.markdown(
+    f"""
+    <div style="text-align: right; padding-top: 10px;">
+        <img src="data:image/png;base64,{encoded}" width="250">
+    </div>
+    """,
+    unsafe_allow_html=True)
+
 # Información detallada para cada diagnóstico
 DIAGNOSIS_INFO = {
     "0": {
@@ -123,9 +133,12 @@ def generate_medical_report(patient_info, diagnosis_data):
     pdf.set_margins(left=15, top=15, right=15)
     pdf.set_auto_page_break(auto=True, margin=15)
 
+
+    pdf.image('Sleep Neuro PRO (4).png', x=150, y=10, w=50, h=50)
+
     # Header
     pdf.set_text_color(10, 15, 40)
-    pdf.cell(0, 10, "NEUROSLEEP PRO DIAGNOSTIC REPORT", ln=1, align='C', fill=False)
+    pdf.cell(0, 10, "NEUROSLEEP PRO DIAGNOSTIC REPORT", ln=2, align='C', fill=False)
 
     # Información del paciente
     pdf.set_font("Arial", size=12)
