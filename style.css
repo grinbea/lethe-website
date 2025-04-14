@@ -109,6 +109,31 @@
 
     .diagnosis-text {
         line-height: 1.6;
-        color: black;
+        color: white;
         font-size: 16px;
     }
+
+    div:contains("download PDF"),
+    span:contains("download PDF"),
+    a:contains("download PDF"),
+    p:contains("download PDF") {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    font-weight: bold !important;
+    }
+    /* Estilo específico para el botón de descarga de PDF */
+.stDownloadButton button {
+  color: #000000 !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+}
+
+.stDownloadButton button:hover {
+  color: #000000 !important;
+  background-color: #F0F0F0 !important;
+}
+
+
+.stDownloadButton > div {
+  background-color: transparent !important;
+}
