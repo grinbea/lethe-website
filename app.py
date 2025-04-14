@@ -241,6 +241,9 @@ if st.button("Initiate Analysis"):
                     diagnosis_description=diagnosis['description']
                 ), unsafe_allow_html=True)
 
+#api_url = 'http://127.0.0.1:8000/predict'
+api_url = 'http://proyecto-lethe-1029998951756.europe-west1.run.app'
+
                 # Ahora las métricas fuera del contexto de columnas anidadas
                 st.markdown("<h3>Key Parameters</h3>", unsafe_allow_html=True)
 
